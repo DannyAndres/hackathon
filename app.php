@@ -88,16 +88,6 @@ $service = new Google_Service_Slides($client);
 
 
 
-
-
-
-
-
-
-$texto = '';
-include "index.php";
-
-
 $titulo = 'titulo';
 
 $presentation = new Google_Service_Slides_Presentation(array(
@@ -122,3 +112,7 @@ foreach ($slides as $i => $slide) {
   printf("- Slide #%s contains %s elements.\n", $i + 1,
       count($slide->getPageElements()));
 }
+
+
+$texto = '';
+//include "./index.php";
