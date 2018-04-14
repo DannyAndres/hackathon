@@ -88,6 +88,23 @@ $service = new Google_Service_Slides($client);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 $titulo = 'titulo';
 
 $presentation = new Google_Service_Slides_Presentation(array(
@@ -106,13 +123,27 @@ $presentationId = $presentation->presentationId;
 $presentation = $service->presentations->get($presentationId);
 $slides = $presentation->getSlides();
 
-printf("The presentation contains %s slides:\n", count($slides));
-foreach ($slides as $i => $slide) {
-  // Print columns A and E, which correspond to indices 0 and 4.
-  printf("- Slide #%s contains %s elements.\n", $i + 1,
-      count($slide->getPageElements()));
-}
+// printf("The presentation contains %s slides:\n", count($slides));
+// foreach ($slides as $i => $slide) {
+//   // Print columns A and E, which correspond to indices 0 and 4.
+//   printf("- Slide #%s contains %s elements.\n", $i + 1,
+//       count($slide->getPageElements()));
+// }
 
+$requests = [];
+$requests[] = new Google_Service_Slides_Request(array(
+  'createSlide' => array (
+    'objectId' => $pageId,
+    'insertionIndex' => count($slides),
+    'slideLayoutReference' => array (
+      'predefinedLayout' => 'TITLE_AND_BODY'
+    )
+  )
+));
 
-$texto = '';
-//include "./index.php";
+$batchUpdateRequest = new Google_Service_Slides_BatchUpdatePresentationRequest(array(
+  'requests' => $requests
+));
+$response = $service->presentations->batchUpdate($presentationId, $batchUpdateRequest);
+$createSlideResponse = $response->getReplies()[0]->getCreateSlide();
+printf("Created slide with ID: %s\n", $createSlideResponse->getObjectId());
