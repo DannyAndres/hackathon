@@ -30,13 +30,11 @@
   </div>
   <div class="caja2">
       <div class="salida">
-        <div>
-          <h5><?php echo htmlspecialchars($_POST['texto']); ?></h5>
-        </div>
-      	<hr>
       	<?php if ($_POST['texto'] != '') { ?>
-          <h3>link presentacion</h3>
-          <a style="font-size: 10px;" target="_blank" href="https://docs.google.com/presentation/d/<?= $presentationId ?>/edit">https://docs.google.com/presentation/d/<?php echo $presentationId; ?>/edit</a>
+            <iframe src="https://docs.google.com/presentation/d/<?= $presentationId ?>/embed?start=false&loop=true&delayms=3000" frameborder="0" width="480" height="299" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+            <hr>
+            <h4>link presentacion</h4>
+            <a style="font-size: 10px;" target="_blank" href="https://docs.google.com/presentation/d/<?= $presentationId ?>/edit">https://docs.google.com/presentation/d/<?php echo $presentationId; ?>/edit</a>
         <?php } ?>
       </div>
   </div>
