@@ -36,7 +36,7 @@ function getClient() {
     // Request authorization from the user.
     $authUrl = $client->createAuthUrl();
     //echo '<a href="' . $authUrl . '">'$authUrl'</a>';
-    printf('<a href=" . %s . ">%s</a>\n%s\n', $authUrl);
+    //printf('<a href=" . %s . ">%s</a>\n%s\n', $authUrl);
     //print 'Enter verification code: ';
     include './view/verification.php';
     //$authCode = trim(fgets(STDIN));
@@ -49,7 +49,7 @@ function getClient() {
       mkdir(dirname($credentialsPath), 0700, true);
     }
     file_put_contents($credentialsPath, json_encode($accessToken));
-    printf("Credentials saved to %s\n", $credentialsPath);
+    //printf("Credentials saved to %s\n", $credentialsPath);
   }
   $client->setAccessToken($accessToken);
 
@@ -80,10 +80,10 @@ $service = new Google_Service_Slides($client);
 
 
 
-// printf("The presentation contains %s slides:\n", count($slides));
+// //printf("The presentation contains %s slides:\n", count($slides));
 // foreach ($slides as $i => $slide) {
 //   // Print columns A and E, which correspond to indices 0 and 4.
-//   printf("- Slide #%s contains %s elements.\n", $i + 1,
+//   //printf("- Slide #%s contains %s elements.\n", $i + 1,
 //       count($slide->getPageElements()));
 // }
 
@@ -99,7 +99,7 @@ function getMainId($titulo,$service){
   ));
 
   $presentation = $service->presentations->create($presentation);
-  printf("Created presentation with ID: %s\n", $presentation->presentationId);
+  //printf("Created presentation with ID: %s\n", $presentation->presentationId);
 
   $presentationId = $presentation->presentationId;
   return $presentationId;
@@ -137,7 +137,7 @@ function createSlide($layout,$slidesId,$slides,$presentationId,$service){
   ));
   $response = $service->presentations->batchUpdate($presentationId, $batchUpdateRequest);
   $createSlideResponse = $response->getReplies()[0]->getCreateSlide();
-  //printf("Created slide with ID: %s\n", $createSlideResponse->getObjectId());
+  ////printf("Created slide with ID: %s\n", $createSlideResponse->getObjectId());
   $ids = $slidesId;
   array_push($ids,$createSlideResponse->getObjectId());
   return $ids;
@@ -192,7 +192,7 @@ function insertText($text,$size,$objectId,$numberSlide,$presentationId,$service)
   ));
   $response = $service->presentations->batchUpdate($presentationId, $batchUpdateRequest);
   $createShapeResponse = $response->getReplies()[0]->getCreateShape();
-  printf("Created textbox with ID: %s\n", $createShapeResponse->getObjectId());
+  //printf("Created textbox with ID: %s\n", $createShapeResponse->getObjectId());
 }
 
 
@@ -207,12 +207,11 @@ function insertText($text,$size,$objectId,$numberSlide,$presentationId,$service)
 
 
 //entrada
-$texto = [
-  ['los patos','los patos no tienen eco'],
-  ['los gatos','los gatos son malevolos'],
-];
+// $texto = [
+//   ['los patos','los patos no tienen eco'],
+//   ['los gatos','los gatos son malevolos'],
+// ];
 
-include './view/home.php';
 
 $slidesId = [];
 $idIncremental = 0;
@@ -222,6 +221,14 @@ $slides = init($presentationId,$service);
 
 insertText('titulo',[48,670,27,35],'textP','p',$presentationId,$service);
 insertText('pararafo',[250,670,27,95],'textP2','p',$presentationId,$service);
+
+$texto = '';
+include './view/home.php';
+
+$texto = [
+  ['los patos','los patos no tienen eco'],
+  ['los gatos','los gatos son malevolos'],
+];
 
 
 foreach ($texto as $element) {

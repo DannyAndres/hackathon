@@ -57,9 +57,6 @@
   width: 70%;
 }
 
-.entradaTexto {
-  width: 70%;
-}
 
 .texto {
   height: 80%;
@@ -80,4 +77,8 @@
     margin-right: 100px;
     margin-top: 5px;
     margin-bottom: 5px;
+}
+
+.form{
+  width: : 100% !important;
 }
