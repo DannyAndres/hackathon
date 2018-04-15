@@ -28,6 +28,7 @@
   height: 20vh;
   margin-top: 10px;
   margin-bottom: 10px;
+ overflow: hidden;
 }
 
 .codigo {
