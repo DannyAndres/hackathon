@@ -1,5 +1,5 @@
 @TEXT TO SLIDE-@
-#Danny Aguilar - Gabriel Gaete - Leandro Pziarro - Bastián Vera-#
+#Danny Aguilar - Gabriel Gaete - Leandro Pizarro - Bastián Vera-#
 @WHAT IS TEXT TO SLIDE-@
 #It doesn't have a very elaborate name, so the idea is obvious... make Google Presetations using just a plain text-#
 @BECAUSE...-@
