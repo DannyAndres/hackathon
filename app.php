@@ -102,7 +102,8 @@ function getMainId($titulo,$service){
   printf("Created presentation with ID: %s\n", $presentation->presentationId);
 
   $presentationId = $presentation->presentationId;
-  return $presentationId;
+  $slides = $presentation->slides;
+  return [$presentationId,$slides[0]['objectId']];
 }
 
 function init($presentationId,$service){
@@ -195,29 +196,33 @@ function insertText($text,$size,$objectId,$numberSlide,$presentationId,$service)
   printf("Created textbox with ID: %s\n", $createShapeResponse->getObjectId());
 }
 
-// function deleteSlide($id,$slidesId,$presentationId,$service){
-//   $requests = [];
-//   $requests[] = new Google_Service_Slides_Request(array(
-//     'deleteObject' => array (
-//       'objectid' => $id,
-//     )
-//   ));
-//
-//   $batchUpdateRequest = new Google_Service_Slides_BatchUpdatePresentationRequest(array(
-//     'requests' => $requests
-//   ));
-//   $response = $service->presentations->batchUpdate($presentationId, $batchUpdateRequest);
-//   $createSlideResponse = $response->getReplies()[0]->getCreateSlide();
-//
-//   $ids = $slidesId;
-//   $ids2 = [];
-//   foreach ($ids as $element) {
-//     if ($element != $id) {
-//       array_push($ids2,$createSlideResponse->getObjectId());
-//     }
-//   }
-//   return $ids2;
-// }
+
+
+function deleteSlide($id,$presentationId,$service){
+  $requests = [];
+  $requests[] = new Google_Service_Slides_Request(array(
+    'deleteObject' => array (
+      'objectid' => $id,
+    )
+  ));
+
+  $batchUpdateRequest = new Google_Service_Slides_BatchUpdatePresentationRequest(array(
+    'resource' => $requests
+  ));
+  var_dump($batchUpdateRequest);
+  $response = $service->presentations->batchUpdate($presentationId, $batchUpdateRequest);
+  var_dump($response);
+  $createSlideResponse = $response->getReplies()[0]->getCreateSlide();
+
+  // $ids = $slidesId;
+  // $ids2 = [];
+  // foreach ($ids as $element) {
+  //   if ($element != $id) {
+  //     array_push($ids2,$createSlideResponse->getObjectId());
+  //   }
+  // }
+  // return $ids2;
+}
 
 // {
 //   altura
@@ -238,7 +243,9 @@ $texto = [
 $slidesId = [];
 $idIncremental = 0;
 
-$presentationId = getMainId('titulo',$service);
+$presentationIdarray = getMainId('titulo',$service);
+$presentationId = $presentationIdarray[0];
+deleteSlide($presentationIdarray[1],$presentationId,$service);
 $slides = init($presentationId,$service);
 
 
