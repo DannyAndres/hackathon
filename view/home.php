@@ -35,6 +35,9 @@
             <hr>
             <h4>link presentacion</h4>
             <a style="font-size: 10px;" target="_blank" href="https://docs.google.com/presentation/d/<?= $presentationId ?>/edit">https://docs.google.com/presentation/d/<?php echo $presentationId; ?>/edit</a>
+        <?php } 
+        else {?>
+          <h4>Cuadro de información</h4>
         <?php } ?>
       </div>
   </div>
