@@ -1,0 +1,58 @@
+.barra-superior {
+  height: 2vh;
+  background-color: #1579f6;
+}
+
+.header {
+    height: 15vh;
+    background-color: white;
+    padding-left: 54px;
+    padding-top: 7px;
+}
+.logo {
+  width: 30%;
+}
+
+.contenedor-codigo {
+  background-color: #f5f3f4;
+  width: 100%;
+  height: 81vh;
+  padding-left: 25%;
+  padding-right: 25%;
+  padding-top: 1%;
+}
+
+.link {
+  background-color: white;
+  width: 100%;
+  height: 20vh;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.codigo {
+  width: 100%;
+  height: 5vh;
+  resize: none;
+  overflow: auto;
+  border: none;
+  align-items: center;
+}
+
+.botones {
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.contenedor-boton {
+  width: 100%;
+  height: 10vh;
+  padding-left: 25%;
+  padding-right: 25%;
+}
+
+.barra-inferior {
+  height: 2vh;
+  background-color: #1579f6;
+}
