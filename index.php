@@ -5,16 +5,14 @@ require_once __DIR__ . '/vendor/autoload.php';
 define('APPLICATION_NAME', 'script');
 define('CREDENTIALS_PATH', '~/.credentials/slides.googleapis.com-php-quickstart.json');
 define('CLIENT_SECRET_PATH', __DIR__ . '/client_secret.json');
-//var_dump(CLIENT_SECRET_PATH);
-// If modifying these scopes, delete your previously saved credentials
-// at ~/.credentials/slides.googleapis.com-php-quickstart.json
+
 define('SCOPES', implode(' ', array(
   Google_Service_Slides::PRESENTATIONS)
 ));
 
-if (php_sapi_name() != 'cli') {
-  throw new Exception('This application must be run on the command line.');
-}
+// if (php_sapi_name() != 'cli') {
+//   throw new Exception('This application must be run on the command line.');
+// }
 
 /**
  * Returns an authorized API client.
@@ -37,10 +35,12 @@ function getClient() {
   } else {
     // Request authorization from the user.
     $authUrl = $client->createAuthUrl();
-    printf("Open the following link in your browser:\n%s\n", $authUrl);
-    print 'Enter verification code: ';
-    $authCode = trim(fgets(STDIN));
-
+    //echo '<a href="' . $authUrl . '">'$authUrl'</a>';
+    printf('<a href=" . %s . ">%s</a>\n%s\n', $authUrl);
+    //print 'Enter verification code: ';
+    include './view/verification.php';
+    //$authCode = trim(fgets(STDIN));
+    $authCode = trim(htmlspecialchars($_POST['code']));
     // Exchange authorization code for an access token.
     $accessToken = $client->fetchAccessTokenWithAuthCode($authCode);
 
@@ -212,6 +212,8 @@ $texto = [
   ['los gatos','los gatos son malevolos'],
 ];
 
+include './view/home.php';
+
 $slidesId = [];
 $idIncremental = 0;
 
@@ -233,3 +235,4 @@ foreach ($texto as $element) {
 
 //var_dump(count($slides));
 $slides = getSlides($presentationId,$service);
+
