@@ -218,6 +218,9 @@ $idIncremental = 0;
 $presentationId = getMainId('titulo',$service);
 $slides = init($presentationId,$service);
 
+insertText('titulo',[48,670,27,35],'textP','p',$presentationId,$service);
+insertText('pararafo',[250,670,27,95],'textP2','p',$presentationId,$service);
+
 
 foreach ($texto as $element) {
   $slidesId = createSlide(null,$slidesId,$slides,$presentationId,$service);
