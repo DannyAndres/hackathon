@@ -1,7 +1,6 @@
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
 
-
 define('APPLICATION_NAME', 'script');
 define('CREDENTIALS_PATH', '~/.credentials/slides.googleapis.com-php-quickstart.json');
 define('CLIENT_SECRET_PATH', __DIR__ . '/client_secret.json');
@@ -111,7 +110,6 @@ function init($presentationId,$service){
   return $slides;
 }
 
-
 function createSlide($layout,$slidesId,$slides,$presentationId,$service){
   $requests = [];
   if (!isset($layout)) {
@@ -196,50 +194,45 @@ function insertText($text,$size,$objectId,$numberSlide,$presentationId,$service)
 }
 
 
-// {
-//   altura
-//   anchura
-//   translate x
-//   translate y
-// }
-
-
-
-
-//entrada
-// $texto = [
-//   ['los patos','los patos no tienen eco'],
-//   ['los gatos','los gatos son malevolos'],
-// ];
-
-
-$slidesId = [];
-$idIncremental = 0;
-
+$texto = '';
 $presentationId = getMainId('titulo',$service);
 $slides = init($presentationId,$service);
-
-insertText('titulo',[48,670,27,35],'textP','p',$presentationId,$service);
-insertText('pararafo',[250,670,27,95],'textP2','p',$presentationId,$service);
-
-$texto = '';
 include './view/home.php';
 
-$texto = [
-  ['los patos','los patos no tienen eco'],
-  ['los gatos','los gatos son malevolos'],
-];
+$texto = $_POST["texto"];
+$titulos = [];
+$descripciones = [];
+
+preg_match_all('/@(.*?)-@/', $texto, $titulos, PREG_SET_ORDER, 0);
+preg_match_all('/#(.*?)-#/', $texto, $descripciones, PREG_SET_ORDER, 0);
 
 
-foreach ($texto as $element) {
-  $slidesId = createSlide(null,$slidesId,$slides,$presentationId,$service);
-  insertText($element[0],[48,670,27,35],'text'.strval($idIncremental),$slidesId[count($slidesId)-1],$presentationId,$service);
-  $idIncremental++;
-  insertText($element[1],[250,670,27,95],'text'.strval($idIncremental),$slidesId[count($slidesId)-1],$presentationId,$service);
-  $idIncremental++;
+
+$entrada = [];
+for ($i=0; $i < count($titulos); $i++) { 
+  array_push($entrada,[
+    $titulos[$i][1],
+    $descripciones[$i][1]
+  ]);
 }
-//echo 'sdklgjhslkfjdgh';
 
-//var_dump(count($slides));
-$slides = getSlides($presentationId,$service);
 
+if ($texto[0] != "") {
+
+  $slidesId = [];
+  $idIncremental = 0;
+  insertText($entrada[0][0],[48,670,27,35],'textP','p',$presentationId,$service);
+  insertText($entrada[0][1],[250,670,27,95],'textP2','p',$presentationId,$service);
+
+  array_splice($entrada, 0, 1);
+
+  foreach ($entrada as $element) {
+    $slidesId = createSlide(null,$slidesId,$slides,$presentationId,$service);
+    insertText($element[0],[48,670,27,35],'text'.strval($idIncremental),$slidesId[count($slidesId)-1],$presentationId,$service);
+    $idIncremental++;
+    insertText($element[1],[250,670,27,95],'text'.strval($idIncremental),$slidesId[count($slidesId)-1],$presentationId,$service);
+    $idIncremental++;
+  }
+  $slides = getSlides($presentationId,$service);
+
+}

@@ -1,0 +1,10 @@
+@TEXT TO SLIDE-@
+#Danny Aguilar - Gabriel Gaete - Leandro Pziarro - Bastián Vera-#
+@WHAT IS TEXT TO SLIDE-@
+#It doesn't have a very elaborate name, so the idea is obvious... make Google Presetations using just a plain text-#
+@BECAUSE...-@
+#We want people don't to spend time thinking about design stuff like dragging images, choosing colors...They should focus just in the content-#
+@HOW?-@
+#We create a web page (really basic web page) that allow user to upload their .txt file or white directly on the page and transform it to a Google Presentation-#
+@WHAT WE USE-@
+#HTML5 and PHP7 (also for the Google Slides API)-#

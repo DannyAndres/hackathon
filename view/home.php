@@ -21,18 +21,23 @@
 	      <div class="entradaTexto">
 	          <textarea id="#textbox" type="text" name="texto" placeholder="  Escriba su texto..." class="texto" rows="5" cols="40"></textarea>
 	        <div class="botonesContenedor">
-	            <button type="submit" class="botones btn btn-primary btn-sm">Crear Slide</button>
-	            <button type="button" class="botones btn btn-primary btn-sm">Seleccionar Archivo</button>
+	            <button onclick="inputClick();" class="botones btn btn-primary btn-sm">Crear Slide</button>
+	            <!-- <button type="button" class="botones btn btn-primary btn-sm">Seleccionar Archivo</button> -->
+									<input type="file" id="fileinput" />
 	        </div>
 	      </div>
 	    </form>
   </div>
   <div class="caja2">
       <div class="salida">
-      	<?php echo htmlspecialchars($_POST['texto']); ?>
+        <div>
+          <h5><?php echo htmlspecialchars($_POST['texto']); ?></h5>
+        </div>
       	<hr>
-      	<h3>link presentacion</h3>
-      	<a style="font-size: 10px;" target="_blank" href="https://docs.google.com/presentation/d/<?= $presentationId ?>/edit">https://docs.google.com/presentation/d/<?php echo $presentationId; ?>/edit</a>
+      	<?php if ($_POST['texto'] != '') { ?>
+          <h3>link presentacion</h3>
+          <a style="font-size: 10px;" target="_blank" href="https://docs.google.com/presentation/d/<?= $presentationId ?>/edit">https://docs.google.com/presentation/d/<?php echo $presentationId; ?>/edit</a>
+        <?php } ?>
       </div>
   </div>
 </div>
@@ -41,28 +46,29 @@
 </div>
 
 </body>
-<script
-  src="https://code.jquery.com/jquery-3.3.1.min.js"
-  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  crossorigin="anonymous"></script>
-<script type="text/javascript">
-	$(document).delegate('#textbox', 'keydown', function(e) {
-	  var keyCode = e.keyCode || e.which;
+  <script type="text/javascript">
 
-	  if (keyCode == 9) {
-	    e.preventDefault();
-	    var start = this.selectionStart;
-	    var end = this.selectionEnd;
+    function clickInput() {
+      console.log('hola');
+    }
 
-	    // set textarea value to: text before caret + tab + text after caret
-	    $(this).val($(this).val().substring(0, start)
-	                + "\t"
-	                + $(this).val().substring(end));
+    function readSingleFile(evt) {
+      //Retrieve the first (and only!) File from the FileList object
+      var f = evt.target.files[0];
 
-	    // put caret at right position again
-	    this.selectionStart =
-	    this.selectionEnd = start + 1;
-	  }
-	});
-</script>
+      if (f) {
+        var r = new FileReader();
+        r.onload = function(e) {
+            var contents = e.target.result;
+          document.getElementById('#textbox').value=  contents;
+        }
+        r.readAsText(f);
+
+      } else {
+        alert("Failed to load file");
+      }
+    }
+
+    document.getElementById('fileinput').addEventListener('change', readSingleFile, false);
+  </script>
 </html>
